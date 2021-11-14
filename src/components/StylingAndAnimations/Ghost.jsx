@@ -1,6 +1,6 @@
 const Ghost = () => {
     return (
-        <svg style={{position:"fixed", transform:"translate(100%, -23vh"}} viewBox="0 0 1272 600"
+        <svg style={{position:"fixed", transform:"translate(18vw, -25vh"}} viewBox="0 0 1272 600"
         >
         <g
             id="layer1"
