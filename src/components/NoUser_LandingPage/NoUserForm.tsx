@@ -2,34 +2,59 @@ import { useEffect, useState } from "react"
 import styles from "./NoUserForm.module.css"
 import { useSpring, animated } from 'react-spring'
 import LoadingAnimation from "../StylingAndAnimations/LoadingAnimation"
+import {
+    useMutation,
+    gql
+  } from "@apollo/client";
+
+const LOGIN = gql`
+    mutation Mutation($email: String, $password: String) {
+        login(email: $email, password: $password) {
+            token
+            user {
+                id
+                email
+                age
+                first_name
+                last_name
+                }
+        }
+}
+`
 
 const NoUserForm = () => {
+
+    const [SignIn, {data, loading, error}] =useMutation(LOGIN)
+    const [User, setUser] = useState("")
+    const [Password, setPassword] = useState("")
+    const [Email, setEmail] = useState("")
 
     const props = useSpring({
          to: { opacity: 1, transform:"translate(0px, 0px" }, 
          from: { opacity: 0, transform:"translate(300px, 0px"  },
-         reset: true,
+         reset: false,
          config:{duration: 200}})
 
     const [Login, setLogin] = useState(true)
-    const [Loading, setLoading] = useState(false)
-    const [ErrorMsg, setErrorMsg] = useState("")
 
     useEffect(() => {
+        if (data) {
+            localStorage.setItem('token', data.login.token)
+            setUser(data.login.user)
+        }
+    }, [data])
 
-    },[Loading])
-
-    const Signup = () => {
-        setLoading(true)
-        setTimeout(() => {
-            setLoading(false)
-            setLogin(true)
-        }, 2000)
-    }
+    console.log(error?.graphQLErrors)
 
     return(
         <section className={styles.frame} style={{height: Login ? "75%" : "100%"}}>
-            {Login ? 
+            {
+            loading ? 
+            
+            <LoadingAnimation />
+
+            :
+            Login ? 
             <animated.div style={props} className={styles.animateddiv}>
                 <nav className={styles.nav}>
                     <ul className="links">
@@ -37,26 +62,32 @@ const NoUserForm = () => {
                         <li className={`${styles.li} ${styles.signininactive}`} onClick={() => setLogin(!Login)}>Sign up</li>
                     </ul>
                 </nav>
-                <form className={styles.formsignin}>
-                    <label htmlFor="username">Username</label>
-                    <input className={styles.formstyling} type="text" name="username" placeholder=""/>
+                {error?.graphQLErrors.map((err) => {
+                    return(
+                        <h1 style={{color: "red", marginTop: "-15px", marginBottom: "15px"}}>{err.message}</h1>
+                    )
+                })}
+                <form className={styles.formsignin} onSubmit={async (e) => {
+                    e.preventDefault()
+                    try {
+                        await SignIn({variables: {email: Email, password: Password}})
+                    } catch (error) {
+                        console.error(error)
+                    }
+                }} >
+                    <label htmlFor="email">Email</label>
+                    <input className={styles.formstyling} type="text" name="email" placeholder="" onChange={(e) => setEmail(e.target.value)}/>
                     <label htmlFor="password">Password</label>
-                    <input className={styles.formstyling} type="password" name="password" placeholder=""/>
+                    <input className={styles.formstyling} type="password" name="password" placeholder="" onChange={(e) => setPassword(e.target.value)}/>
                     <div className={styles.btnanimate}>
                         <button className={styles.btnsignin}>Sign in</button>
                     </div>
                 </form>
                 <div className={styles.forgot}>
-                    <button className={styles.forgotbutton}>Forgot your password?</button>
+                    <button type="submit" className={styles.forgotbutton}>Forgot your password?</button>
                 </div>
             </animated.div>
-            
-            : Loading ? 
-            
-            <LoadingAnimation />
-
             :
-
             <animated.div style={props} className={styles.animateddiv}>
             <nav className={styles.nav}>
                 <ul className="links">
@@ -64,7 +95,7 @@ const NoUserForm = () => {
                     <li className={`${styles.li} ${styles.signinactive}`}>Sign up</li>
                 </ul>
             </nav>
-            <form className={styles.formsignin} style={{height:"90%"}} onSubmit={Signup}>
+            <form className={styles.formsignin} style={{height:"90%"}}>
                 <label htmlFor="username">Username</label>
                 <input className={styles.formstyling} type="text" name="username" placeholder=""/>
                 <label htmlFor="email">Email</label>
