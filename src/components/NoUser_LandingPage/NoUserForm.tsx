@@ -2,30 +2,28 @@ import { useEffect, useState } from "react"
 import styles from "./NoUserForm.module.css"
 import { useSpring, animated } from 'react-spring'
 import LoadingAnimation from "../StylingAndAnimations/LoadingAnimation"
-import {
-    useMutation,
-    gql
-  } from "@apollo/client";
+import { useMutation, gql } from "@apollo/client";
+import { useRecoilState } from "recoil";
+import userState from "../../atom"
 
 const LOGIN = gql`
-    mutation Mutation($email: String, $password: String) {
-        login(email: $email, password: $password) {
-            token
-            user {
-                id
-                email
-                age
-                first_name
-                last_name
-                }
-        }
+    mutation Login($email: String, $password: String) {
+    login(email: $email, password: $password) {
+    token
+    user {
+      id
+      email
+      age
+      password
+    }
+  }
 }
 `
 
 const NoUserForm = () => {
 
     const [SignIn, {data, loading, error}] =useMutation(LOGIN)
-    const [User, setUser] = useState("")
+    const [CurrentUser, setCurrentUser] = useRecoilState(userState)
     const [Password, setPassword] = useState("")
     const [Email, setEmail] = useState("")
 
@@ -40,11 +38,11 @@ const NoUserForm = () => {
     useEffect(() => {
         if (data) {
             localStorage.setItem('token', data.login.token)
-            setUser(data.login.user)
+            setCurrentUser(data.login.user)
         }
-    }, [data])
+    }, [data, setCurrentUser])
 
-    console.log(error?.graphQLErrors)
+    console.log(CurrentUser)
 
     return(
         <section className={styles.frame} style={{height: Login ? "75%" : "100%"}}>
@@ -62,23 +60,25 @@ const NoUserForm = () => {
                         <li className={`${styles.li} ${styles.signininactive}`} onClick={() => setLogin(!Login)}>Sign up</li>
                     </ul>
                 </nav>
-                {error?.graphQLErrors.map((err) => {
+                {error?.graphQLErrors.map((err, i) => {
                     return(
-                        <h1 style={{color: "red", marginTop: "-15px", marginBottom: "15px"}}>{err.message}</h1>
+                        <h1 key={i} style={{color: "red", marginTop: "-15px", marginBottom: "15px"}}>{err.message}</h1>
                     )
                 })}
                 <form className={styles.formsignin} onSubmit={async (e) => {
                     e.preventDefault()
                     try {
                         await SignIn({variables: {email: Email, password: Password}})
-                    } catch (error) {
-                        console.error(error)
+                    } catch (err) {
+                        console.error(err)
+                        return "Please fill both fields!"
                     }
+                
                 }} >
                     <label htmlFor="email">Email</label>
-                    <input className={styles.formstyling} type="text" name="email" placeholder="" onChange={(e) => setEmail(e.target.value)}/>
+                    <input className={styles.formstyling} type="text" name="email" placeholder="" onChange={(e) => setEmail(e.target.value)} />
                     <label htmlFor="password">Password</label>
-                    <input className={styles.formstyling} type="password" name="password" placeholder="" onChange={(e) => setPassword(e.target.value)}/>
+                    <input className={styles.formstyling} type="password" name="password" placeholder="" onChange={(e) => setPassword(e.target.value)} />
                     <div className={styles.btnanimate}>
                         <button className={styles.btnsignin}>Sign in</button>
                     </div>
@@ -96,13 +96,15 @@ const NoUserForm = () => {
                 </ul>
             </nav>
             <form className={styles.formsignin} style={{height:"90%"}}>
-                <label htmlFor="username">Username</label>
-                <input className={styles.formstyling} type="text" name="username" placeholder=""/>
+                <label htmlFor="firstname">First Name</label>
+                <input className={styles.formstyling} type="text" name="firstname" placeholder=""/>
+                <label htmlFor="lastname">Last Name</label>
+                <input className={styles.formstyling} type="text" name="lastname" placeholder=""/>
                 <label htmlFor="email">Email</label>
                 <input className={styles.formstyling} type="text" name="email" placeholder=""/>
+                <label htmlFor="age">Email</label>
+                <input className={styles.formstyling} type="text" name="age" placeholder=""/>
                 <label htmlFor="password">Password</label>
-                <input className={styles.formstyling} type="password" name="password" placeholder=""/>
-                <label htmlFor="password">Confirm Password</label>
                 <input className={styles.formstyling} type="password" name="password" placeholder=""/>
                 <div className={styles.btnanimate} style={{marginTop: "10px"}}>
                     <button type="submit" className={styles.btnsignin}>Sign up</button>
