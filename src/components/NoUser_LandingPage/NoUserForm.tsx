@@ -14,7 +14,8 @@ const LOGIN = gql`
       id
       email
       age
-      password
+      firstName
+      lastName
     }
   }
 }

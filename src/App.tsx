@@ -2,24 +2,52 @@ import styles from "./styles/App.module.css"
 import NoUserLandingPage from "./components/NoUser_LandingPage/NoUserLandingPage";
 import { useRecoilState } from "recoil";
 import userState from "./atom"
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Home from "./components/LandingPage/Home";
+import Navbar from "./components/Navbar/Navbar";
+import { gql, useQuery } from '@apollo/client';
+import { useEffect } from "react";
+
+const GET_USER = gql`
+  query Query {
+    currentUser {
+      email
+      age
+      firstName
+      lastName
+    }
+}`
 
 const App = () => {
 
+  const { data, loading } = useQuery(GET_USER);
   const [CurrentUser, setCurrentUser] = useRecoilState(userState)
-  console.log(CurrentUser)
+
+  useEffect(()=> {
+    if(data) {
+      setCurrentUser(data)
+    }
+  },[data, setCurrentUser])
 
   return (
     <div>
-    {
-    !CurrentUser ?
-    <div className={styles.test}>
-      <NoUserLandingPage />
-    </div> 
-    :
-    <div>
-      <h1>Hello</h1>
-    </div>
-    }
+      {
+      loading?
+      <div></div>
+      :
+      !CurrentUser ?
+      <div className={styles.test}>
+        <NoUserLandingPage />
+      </div> 
+      :
+      <BrowserRouter>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<Home />} />
+        </Routes>
+      </BrowserRouter>
+      }
     </div>
   );
 }
