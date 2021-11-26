@@ -42,9 +42,6 @@ const NoUserForm = () => {
             setCurrentUser(data.login.user)
         }
     }, [data, setCurrentUser])
-
-    console.log(CurrentUser)
-
     return(
         <section className={styles.frame} style={{height: Login ? "75%" : "100%"}}>
             {
@@ -103,7 +100,7 @@ const NoUserForm = () => {
                 <input className={styles.formstyling} type="text" name="lastname" placeholder=""/>
                 <label htmlFor="email">Email</label>
                 <input className={styles.formstyling} type="text" name="email" placeholder=""/>
-                <label htmlFor="age">Email</label>
+                <label htmlFor="age">Age</label>
                 <input className={styles.formstyling} type="text" name="age" placeholder=""/>
                 <label htmlFor="password">Password</label>
                 <input className={styles.formstyling} type="password" name="password" placeholder=""/>

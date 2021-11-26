@@ -1,8 +1,48 @@
 .navbar {
     width: 100%;
     height: 4.5rem;
-    background-color: rgb(34, 29, 29);
+    background-color: rgb(26, 23, 23);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 .logo {
     height: 100%;
+}
+.search {
+    padding: 0px 15px;
+    background-color: grey;
+    height: 2rem;
+    width: 18rem;
+    border-radius: 15px;
+    z-index: 1;
+    position: relative;
+}
+.searchbtn {
+    color: grey;
+    height: 2rem;
+    padding: 0px 30px;
+    background: black;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    position: relative;
+    margin-left: -20px;
+}
+.navicons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 17rem;
+    height: 100%;
+    align-items: center;
+    margin-right: 20px;
+}
+.navtext {
+    color: grey;
+    padding: 7px;
+    box-sizing: border-box;
+}
+.navtext:hover {
+    border-bottom: red solid 2px;
+    box-sizing: border-box;
 }
