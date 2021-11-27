@@ -1,7 +1,5 @@
 import styles from "./Navbar.module.css"
 import logo from "../StylingAndAnimations/download.svg"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faCaretDown, faComment, faUserCircle } from '@fortawesome/free-solid-svg-icons'
 
 const Navbar = () => {
     return(

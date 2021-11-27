@@ -1,0 +1,19 @@
+.sidebar {
+    height: 92%;
+    background-color: rgba(182, 176, 176, 0.2);
+    width: 10rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.display{
+    color: grey;
+    transform: translateX(20px);
+    font-size: 1.5rem;
+    padding-right: 1rem;
+    box-sizing: inherit;
+    border-bottom: solid transparent 2px;
+}
+.display:first-child {
+    margin-top: 30px;
+}

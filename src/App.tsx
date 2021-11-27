@@ -7,6 +7,7 @@ import Home from "./components/LandingPage/Home";
 import Navbar from "./components/Navbar/Navbar";
 import { gql, useQuery } from '@apollo/client';
 import { useEffect } from "react";
+import Sidebar from "./components/Siderbar/Siderbar";
 
 const GET_USER = gql`
   query Query {
@@ -30,7 +31,7 @@ const App = () => {
   },[data, setCurrentUser])
 
   return (
-    <div>
+    <div className="container">
       {
       loading?
       <div></div>
@@ -41,11 +42,12 @@ const App = () => {
       </div> 
       :
       <BrowserRouter>
-      <Navbar />
+        <Navbar />
+        <Sidebar />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<Home />} />
-        </Routes>
+      </Routes>
       </BrowserRouter>
       }
     </div>
