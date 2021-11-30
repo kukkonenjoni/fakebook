@@ -43,11 +43,13 @@ const App = () => {
       :
       <BrowserRouter>
         <Navbar />
-        <Sidebar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<Home />} />
-      </Routes>
+        <div className="main">
+          <Sidebar />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<Home />} />
+          </Routes>
+        </div>
       </BrowserRouter>
       }
     </div>

@@ -5,21 +5,18 @@ import App from './App';
 import {
   ApolloClient,
   InMemoryCache,
-  createHttpLink,
   ApolloProvider,
 } from "@apollo/client";
 import { setContext } from '@apollo/client/link/context';
 import { RecoilRoot } from 'recoil';
+import { createUploadLink } from "apollo-upload-client";
 
-const httpLink = createHttpLink({
+const httpLink = createUploadLink({
   uri: 'http://localhost:4000/graphql',
 });
 
 const authLink = setContext((_, { headers }) => {
-  // get the authentication token from local storage if it exists
   const token = localStorage.getItem('token');
-  // return the headers to the context so httpLink can read them
-  console.log(token)
   return {
     headers: {
       ...headers,
