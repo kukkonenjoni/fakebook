@@ -2,8 +2,7 @@ import styles from "./styles/App.module.css"
 import NoUserLandingPage from "./components/NoUser_LandingPage/NoUserLandingPage";
 import { useRecoilState } from "recoil";
 import userState from "./atom"
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Home from "./components/LandingPage/Home";
+import { BrowserRouter } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 import { gql, useQuery } from '@apollo/client';
 import { useEffect } from "react";
@@ -45,10 +44,6 @@ const App = () => {
         <Navbar />
         <div className="main">
           <Sidebar />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<Home />} />
-          </Routes>
         </div>
       </BrowserRouter>
       }

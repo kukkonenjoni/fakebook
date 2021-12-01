@@ -1,6 +1,6 @@
 import styles from "./Home.module.css"
 import { useMutation, gql } from "@apollo/client"
-import { FormEvent, useRef } from "react"
+import { FormEvent, useRef, useState } from "react"
 
 
 const UPLOAD_FILE = gql`
@@ -20,6 +20,8 @@ const CREATE_POST = gql`
 
 const Home = (): JSX.Element => {
 
+    const [Content, setContent] = useState("")
+    const [ImageName, setImageName] = useState("")
     const inputFile = useRef<HTMLInputElement>(null);
 
     const [singleUpload] = useMutation(UPLOAD_FILE, {
@@ -31,7 +33,10 @@ const Home = (): JSX.Element => {
         const file = inputFile.current?.files![0]
         if (file) {
             singleUpload({ variables: { file }})
+        } else if(!file && Content) {
+            return
         } else {
+            console.log("working")
             return
         }
     }
@@ -39,13 +44,19 @@ const Home = (): JSX.Element => {
     const test = (data: any) => {
         console.log(data)
     }
+    console.log(inputFile.current?.files![0])
 
     return(
         <div className={styles.bground} onSubmit={(e) => handleFileChange(e)}>
-            <form id="formElem">
-            <h1>Choose image</h1>
-            <input type="file" name="image" ref={inputFile}/>
-            <button type="submit">Create Post</button>
+            <form id="formElem" className={styles.form}>
+                <h1>Create a post for your friends to see!</h1>
+                <textarea className={styles.textinput} onChange={(e) => setContent(e.target.value)}/>
+                <div className={styles.input_div}>
+                    <label htmlFor="image" className="file">Choose image</label>
+                    <input type="file" name="image" id="image" ref={inputFile} onChange={(e)=> setImageName(e.target.files![0].name)}/>
+                    <h1>{ImageName ? "Current image: " + ImageName: ""}</h1>
+                </div>
+                <input type="submit" className={styles.submitbtn} value="Submit post!" />
             </form>
         </div>
     )

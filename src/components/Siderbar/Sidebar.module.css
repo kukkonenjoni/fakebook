@@ -1,6 +1,6 @@
 .sidebar {
     height: 100%;
-    background-color: rgba(182, 176, 176, 0.2);
+    background-color: rgba(0, 0, 0, 0.7);
     width: 10rem;
     display: flex;
     flex-direction: column;
@@ -16,4 +16,11 @@
 }
 .display:first-child {
     margin-top: 30px;
+}
+.container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: space-between;
+    background-image: linear-gradient(to bottom right,#002f4b,#dc4225);
 }

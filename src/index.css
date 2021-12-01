@@ -32,3 +32,12 @@ a {
   height: 92%;
   display: flex;
 }
+input[type="file"] {
+  display: none;
+}
+label:hover {
+  cursor: pointer;
+}
+.file {
+  padding: 0px;
+}
