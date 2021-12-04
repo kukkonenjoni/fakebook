@@ -24,7 +24,7 @@ const LOGIN = gql`
 const NoUserForm = () => {
 
     const [SignIn, {data, loading, error}] =useMutation(LOGIN)
-    const [CurrentUser, setCurrentUser] = useRecoilState(userState)
+    const [_CurrentUser, setCurrentUser] = useRecoilState(userState)
     const [Password, setPassword] = useState("")
     const [Email, setEmail] = useState("")
 

@@ -10,10 +10,33 @@ import {
 import { setContext } from '@apollo/client/link/context';
 import { RecoilRoot } from 'recoil';
 import { createUploadLink } from "apollo-upload-client";
+import { split } from '@apollo/client';
+import { getMainDefinition } from '@apollo/client/utilities';
+import { WebSocketLink } from '@apollo/client/link/ws';
 
 const httpLink = createUploadLink({
   uri: 'http://localhost:4000/graphql',
 });
+const wsLink = new WebSocketLink({
+  uri: 'ws://localhost:4000/subscriptions',
+  options: {
+    reconnect: true,
+    connectionParams: {
+      authToken: localStorage.getItem('token')
+    }
+  }
+});
+const splitLink = split(
+  ({ query }): boolean => {
+    const definition = getMainDefinition(query);
+    return (
+      definition.kind === 'OperationDefinition' &&
+      definition.operation === 'subscription'
+    );
+  },
+  wsLink,
+  httpLink,
+);
 
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem('token');
@@ -26,7 +49,7 @@ const authLink = setContext((_, { headers }) => {
 });
 
 const client = new ApolloClient({
-  link: authLink.concat(httpLink),
+  link: authLink.concat(splitLink),
   cache: new InMemoryCache()
 });
 
