@@ -1,6 +1,7 @@
 import styles from "./Home.module.css"
-import { useMutation, gql } from "@apollo/client"
-import { FormEvent, useRef, useState } from "react"
+import { useMutation, gql, useQuery } from "@apollo/client"
+import { FormEvent, useEffect, useRef, useState } from "react"
+import Post from "../Post/Post"
 
 
 const UPLOAD_FILE = gql`
@@ -25,38 +26,97 @@ const CREATE_POST = gql`
         }
     }
 `
-
+const GET_POSTS = gql`
+    query currentUser {
+        currentUser {
+            post {
+                createdAt
+                id
+                content
+                imageUrl
+                author {
+                    firstName
+                    lastName
+                }
+            }
+            friends {
+                post {
+                    createdAt
+                    id
+                    imageUrl
+                    content
+                    createdAt
+                    link
+                    author {
+                        firstName
+                        lastName
+                    }
+                }
+            }
+  }
+}
+`
+// setAllPosts(prevState => {return [...data.createPost, ...prevState]})
 const Home = (): JSX.Element => {
 
     const [Content, setContent] = useState("")
     const [ImageName, setImageName] = useState("")
     const inputFile = useRef<HTMLInputElement>(null);
     const [ErrorMsg, setErrorMsg] = useState("")
+    const [AllPosts, setAllPosts] = useState(Array)
 
     const [singleUpload] = useMutation(UPLOAD_FILE, {
         onCompleted: data => submitPost(data)
     })
     const [createPost] = useMutation(CREATE_POST, {
-        onCompleted: data => console.log(data)
+        onCompleted: data => setAllPosts(prevState => {return [data.createPost, ...prevState]})
     })
+    const { loading, data } = useQuery(GET_POSTS)
+
+    useEffect(() => {
+        let fPosts: any[] = []
+        if (data) {
+            data.currentUser.friends.forEach((friend: any) => {
+                fPosts = friend.post.map((post: any) => {
+                    return post
+                })
+            })
+            const allPosts = data.currentUser.post.concat(fPosts)
+            allPosts.sort((a: { createdAt: number },b: { createdAt: number }) => {
+                if (a.createdAt > b.createdAt) {
+                    return -1
+                } else if (a.createdAt < b.createdAt) {
+                    return 1
+                } else {
+                    return 0
+                }
+            })
+            setAllPosts(allPosts)
+        }
+    }, [data])
 
     const handleFileChange = (e: FormEvent<HTMLDivElement>) => {
         e.preventDefault()
         const file = inputFile.current?.files![0]
-        if (file) {
+        console.log(file)
+        if (file != undefined) {
             setErrorMsg("")
             singleUpload({ variables: { file }})
         } else if(!file && Content) {
             setErrorMsg("")
+            submitPost()
             return
         } else {
             setErrorMsg("Please fill atleast one field")
             return
         }
     }
-    const submitPost = (data: any) => {
-        console.log(data.singleUpload.url)
-        createPost({ variables: {content: Content, imageUrl: data.singleUpload.url}})
+    const submitPost = (data: any = null) => {
+        if (data) {
+            createPost({ variables: {content: Content, imageUrl: data.singleUpload.url}})
+        } else {
+            createPost({ variables: {content: Content}})
+        }
     }
 
     return(
@@ -74,9 +134,9 @@ const Home = (): JSX.Element => {
                     <h2 className={styles.error}>{ErrorMsg}</h2>
                 </form>
             </div>
-            <div>
-                <h1>Hello</h1>
-            </div>
+            {AllPosts.map((post: any) => {
+                return <Post post={post}/>
+            })}
         </div>
     )
     

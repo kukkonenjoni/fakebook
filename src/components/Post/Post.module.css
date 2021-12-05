@@ -1,0 +1,20 @@
+.username {
+    font-size: 20px;
+}
+.container {
+    background-color: rgba(0, 0, 0, 0.6);
+    margin: 20px 0px;
+    width: 45%;
+    border-radius: 20px;
+    padding: 15px;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.8);
+}
+.image {
+    text-align: center;
+    background-color: blue;
+}
+.img_container {
+    margin: 20px 0px;
+    display: flex;
+    justify-content: center;
+}

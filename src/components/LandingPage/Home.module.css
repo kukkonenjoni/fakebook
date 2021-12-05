@@ -10,7 +10,7 @@
 }
 .textinput {
     background-color: rgb(126, 113, 113);
-    width: 33rem;
+    width: 75%;
     height: 9rem;
     resize: none;
     overflow-wrap: break-word;
@@ -23,6 +23,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
 }
 .input_div {
     display: flex;
