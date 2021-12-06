@@ -32,15 +32,17 @@ const Post = (props:any) => {
     console.log(props.post)
     return (
         <section className={styles.container}>
-            <div>
+            <div className={styles.post_header}>
                 <h2 className={styles.username}>{author.firstName + " " + author.lastName}</h2>
-                <p>Created {formatDate(createdAt)} </p>
+                <p className={styles.createdat}>Created {formatDate(createdAt)} </p>
             </div>
-            <p>{content}</p>
-            <p>{link}</p>
-            <div className={styles.img_container}>
-                {imageUrl != null ? <img src={imageUrl} alt="Post_image" className={styles.image} /> : ""}
+            <div className={styles.content_container}>
+                <p className={styles.content}>{content}</p>
+                <p className={styles.content}>{link}</p>
             </div>
+            {imageUrl != null ? <div className={styles.img_container}>
+                <img src={imageUrl} alt="Post_image" className={styles.image} />
+            </div> : ""}
             <h2>Comments</h2>
         </section>
     )
