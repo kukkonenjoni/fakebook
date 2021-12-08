@@ -11,6 +11,7 @@ import Sidebar from "./components/Siderbar/Siderbar";
 const GET_USER = gql`
   query Query {
     currentUser {
+      id
       email
       age
       firstName

@@ -1,7 +1,7 @@
 import styles from "./Post.module.css"
 
 const Post = (props:any) => {
-    const { author, content, createdAt, id, imageUrl, link } = props.post
+    const { author, content, createdAt, imageUrl, link } = props.post
 
     // Amount of time since post was created
     const formatDate = (postDate: string) => {
@@ -28,8 +28,6 @@ const Post = (props:any) => {
             return " a few seconds ago"
         }
     }
-
-    console.log(props.post)
     return (
         <section className={styles.container}>
             <div className={styles.post_header}>

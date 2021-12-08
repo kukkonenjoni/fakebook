@@ -29,6 +29,7 @@ const CREATE_POST = gql`
 const GET_POSTS = gql`
     query currentUser {
         currentUser {
+            id
             post {
                 createdAt
                 id
@@ -71,7 +72,7 @@ const Home = (): JSX.Element => {
     const [createPost] = useMutation(CREATE_POST, {
         onCompleted: data => setAllPosts(prevState => {return [data.createPost, ...prevState]})
     })
-    const { loading, data } = useQuery(GET_POSTS)
+    const { data } = useQuery(GET_POSTS)
 
     useEffect(() => {
         let fPosts: any[] = []
@@ -99,7 +100,7 @@ const Home = (): JSX.Element => {
         e.preventDefault()
         const file = inputFile.current?.files![0]
         console.log(file)
-        if (file != undefined) {
+        if (file !== undefined) {
             setErrorMsg("")
             singleUpload({ variables: { file }})
         } else if(!file && Content) {
@@ -135,7 +136,7 @@ const Home = (): JSX.Element => {
                 </form>
             </div>
             {AllPosts.map((post: any) => {
-                return <Post post={post}/>
+                return <Post post={post} key={post.id}/>
             })}
         </div>
     )
