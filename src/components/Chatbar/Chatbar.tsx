@@ -1,4 +1,4 @@
-import { useQuery } from "@apollo/client"
+import { useQuery, useSubscription } from "@apollo/client"
 import gql from "graphql-tag"
 import { useEffect, useState } from "react"
 import Chatwindow from "../Chatwindow/Chatwindow"
@@ -21,6 +21,13 @@ const ALL_MESSAGES = gql`
     getAllMessages {
       id
       messages {
+        id
+        receivedBy {
+            id
+        }
+        createdBy {
+            id
+        }
         messagecontent
       }
       user1 {
@@ -36,21 +43,48 @@ const ALL_MESSAGES = gql`
     }
   }
 `
+const ON_MESSAGE = gql`
+    subscription Message {
+        message {
+            id
+            createdBy {
+                id
+            }
+            chatroom {
+                id
+            }
+            messagecontent
+        }
+    }
+`
 
 const Chatbar = () => {
 
     const [AllMessages, setAllMessages] = useState<Array<any>>(Array)
     const [ChatFriend, setChatFriend] = useState(null)
 
+    const {data} = useSubscription(ON_MESSAGE)
+
+
     const fList = useQuery(FRIEND_LIST, {
         pollInterval: 120000
     })
     const fMessages = useQuery(ALL_MESSAGES)
     useEffect(() => {
-        if (fMessages.data) {
-            setAllMessages(fMessages.data.getAllMessages)
+        if (data && AllMessages) {
+            const chatroom: Array<any> = AllMessages.filter((croom: any) => {
+                if (croom.id === data.message.chatroom.id) {
+                    return croom
+                }
+            })
+            chatroom[0].messages = [data.message, ...chatroom[0].messages]
+            console.log(chatroom[0])
         }
-    }, [fMessages.data])
+        if (fMessages.data) {
+            const allMessagesQuery: any = JSON.parse(JSON.stringify(fMessages.data.getAllMessages))
+            setAllMessages(allMessagesQuery)
+        }
+    }, [fMessages.data, data])
 
     if (fList.loading) {
         return(
