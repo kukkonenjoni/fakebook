@@ -40,6 +40,7 @@ const NoUserForm = () => {
         if (data) {
             localStorage.setItem('token', data.login.token)
             setCurrentUser(data.login.user)
+            
         }
     }, [data, setCurrentUser])
     return(

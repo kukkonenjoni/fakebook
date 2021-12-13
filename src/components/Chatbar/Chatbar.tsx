@@ -63,7 +63,7 @@ const Chatbar = () => {
     const [AllMessages, setAllMessages] = useState<Array<any>>(Array)
     const [ChatFriend, setChatFriend] = useState(null)
 
-    const {data} = useSubscription(ON_MESSAGE)
+    let {data} = useSubscription(ON_MESSAGE)
 
 
     const fList = useQuery(FRIEND_LIST, {
@@ -72,19 +72,21 @@ const Chatbar = () => {
     const fMessages = useQuery(ALL_MESSAGES)
     useEffect(() => {
         if (data && AllMessages) {
-            const chatroom: Array<any> = AllMessages.filter((croom: any) => {
+            const chatroom: Array<any> = AllMessages.map((croom) => {
                 if (croom.id === data.message.chatroom.id) {
-                    return croom
+                    croom.messages.push(data.message)
                 }
+                return croom
             })
-            chatroom[0].messages = [data.message, ...chatroom[0].messages]
-            console.log(chatroom[0])
+            setAllMessages(chatroom)
         }
+    }, [fMessages.data, data])
+    useEffect(() => {
         if (fMessages.data) {
             const allMessagesQuery: any = JSON.parse(JSON.stringify(fMessages.data.getAllMessages))
             setAllMessages(allMessagesQuery)
         }
-    }, [fMessages.data, data])
+    }, [fMessages.data])
 
     if (fList.loading) {
         return(
@@ -95,6 +97,7 @@ const Chatbar = () => {
     }
     return(
         <div className={styles.chatbar}>
+            {/*console.log(AllMessages)*/}
             Friend list
             {fList.data.currentUser.friends.map((friend: any) => {
                 return(

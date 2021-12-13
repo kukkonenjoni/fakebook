@@ -3,7 +3,7 @@ import {
   } from 'recoil';
 
 const userState = atom({
-    key: 'textState',
+    key: 'userState',
     default: null
   });
 

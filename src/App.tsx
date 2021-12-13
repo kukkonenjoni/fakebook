@@ -26,6 +26,7 @@ const App = () => {
 
   useEffect(()=> {
     if(data) {
+      console.log(data)
       setCurrentUser(data)
     }
   },[data, setCurrentUser])
