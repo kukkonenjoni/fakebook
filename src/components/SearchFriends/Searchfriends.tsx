@@ -31,7 +31,7 @@ const Searchfriends = () => {
     if (loading) {
         return <div className={styles.center}> <LoadingAnimation /> </div>
     }
-    if (data.search.length !== 0) {
+    if (data && data.search.length !== 0) {
         return(
             <div className={styles.users_container}>
                 {data.search.map((user: any) => {

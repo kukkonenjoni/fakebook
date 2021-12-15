@@ -70,6 +70,7 @@ const Chatbar = () => {
         pollInterval: 120000
     })
     const fMessages = useQuery(ALL_MESSAGES)
+    
     useEffect(() => {
         if (data && AllMessages) {
             const chatroom: Array<any> = AllMessages.map((croom) => {
@@ -81,6 +82,7 @@ const Chatbar = () => {
             setAllMessages(chatroom)
         }
     }, [fMessages.data, data])
+
     useEffect(() => {
         if (fMessages.data) {
             const allMessagesQuery: any = JSON.parse(JSON.stringify(fMessages.data.getAllMessages))

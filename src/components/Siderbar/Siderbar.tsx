@@ -23,7 +23,7 @@ const Sidebar = () => {
             <Routes>
                 <Route path="/search" element={<Searchfriends />} />
                 <Route path="/" element={<Home />} />
-                <Route path="/friends" element={<Searchfriends />} />
+                <Route path="/friends" element={<Home />} />
             </Routes>
             <Chatbar />
         </main>
