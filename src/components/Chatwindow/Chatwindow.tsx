@@ -24,7 +24,7 @@ const Chatwindow = (props: any) => {
     console.log("CurrUser: ", CurrentUser.currentUser)
 
     const [InputText, setInputText] = useState("")
-    const [Message, { data, loading, error }] = useMutation(SEND_MESSAGE);
+    const [Message, { data }] = useMutation(SEND_MESSAGE);
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()

@@ -1,24 +1,15 @@
 import styles from "./Navbar.module.css"
 import logo from "../StylingAndAnimations/download.svg"
 import { FormEvent, useEffect } from "react"
-import { useSearchParams } from "react-router-dom";
-import { gql, useLazyQuery } from "@apollo/client";
+import { useSearchParams, useNavigate } from "react-router-dom";
 
-const SEARCH_USERS = gql`
-    query Search($name: String) {
-        search(name: $name) {
-            firstName
-            lastName
-        }
-    }
-`
 
 const Navbar = () => {
 
     let [searchParams, setSearchParams] = useSearchParams();
     let users = searchParams.get("users");
 
-    const [searchUsers, {loading, error, data}] = useLazyQuery(SEARCH_USERS)
+    let navigate = useNavigate()
 
     const onSearch = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -31,12 +22,10 @@ const Navbar = () => {
     useEffect(() => {
         if (!users) return
         if (users) {
-            searchUsers({variables: {name: users}})
+            //navigate(`../friends`, {replace: true})
+            navigate(`../search/?users=${users}`, {replace: true})
         }
-        if (data) {
-            console.log(data)
-        }
-    }, [users, data])
+    }, [users, navigate])
 
     return(
         <nav className={styles.navbar}>

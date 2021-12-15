@@ -4,11 +4,11 @@ import { Link } from "react-router-dom"
 import { Route, Routes } from "react-router-dom";
 import Home from "../LandingPage/Home";
 import Chatbar from "../Chatbar/Chatbar";
+import Searchfriends from "../SearchFriends/Searchfriends";
 
 const Sidebar = () => {
 
     const { pathname } = useLocation()
-    console.log(useLocation())
 
     return(
         <main className={styles.container}>
@@ -21,8 +21,9 @@ const Sidebar = () => {
                 </h1>
             </div>
             <Routes>
+                <Route path="/search" element={<Searchfriends />} />
                 <Route path="/" element={<Home />} />
-                <Route path="/friends" element={<Home />} />
+                <Route path="/friends" element={<Searchfriends />} />
             </Routes>
             <Chatbar />
         </main>

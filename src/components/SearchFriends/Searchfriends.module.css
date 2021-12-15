@@ -1,0 +1,14 @@
+.center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+}
+.user {
+    margin: 30px;
+    background-color: blue;
+    height: 15%;
+}
+.users_container {
+    display: flex;
+    flex-direction: row;
+}
