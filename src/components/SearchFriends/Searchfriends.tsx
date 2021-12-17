@@ -10,6 +10,8 @@ const SEARCH_USERS = gql`
             id
             firstName
             lastName
+            age
+            profilePic
         }
     }
 `
@@ -39,6 +41,8 @@ const Searchfriends = () => {
                         <div className={styles.user} key={user.id}>
                             <h1>{user.firstName}</h1>
                             <h1>{user.lastName}</h1>
+                            <h1>{user.age}</h1>
+                            <img src={user.profilePic} alt="Profile" className={styles.profile_pic} />
                         </div>
                     )
                 })}

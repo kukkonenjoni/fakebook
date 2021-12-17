@@ -5,6 +5,7 @@ import { Route, Routes } from "react-router-dom";
 import Home from "../LandingPage/Home";
 import Chatbar from "../Chatbar/Chatbar";
 import Searchfriends from "../SearchFriends/Searchfriends";
+import Profile from "../Profile/Profile";
 
 const Sidebar = () => {
 
@@ -24,6 +25,7 @@ const Sidebar = () => {
                 <Route path="/search" element={<Searchfriends />} />
                 <Route path="/" element={<Home />} />
                 <Route path="/friends" element={<Home />} />
+                <Route path="profile/:id" element={<Profile />} />
             </Routes>
             <Chatbar />
         </main>
