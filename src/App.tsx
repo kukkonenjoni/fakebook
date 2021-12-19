@@ -16,6 +16,22 @@ const GET_USER = gql`
       age
       firstName
       lastName
+      friends {
+        firstName
+        lastName
+        id
+      }
+      sent_friendreq {
+        firstName
+        lastName
+        id
+      }
+      received_friendreq {
+        firstName
+        lastName
+        id
+        profilePic
+      }
     }
 }`
 
@@ -27,7 +43,7 @@ const App = () => {
   useEffect(()=> {
     if(data) {
       console.log(data)
-      setCurrentUser(data)
+      setCurrentUser(data.currentUser)
     }
   },[data, setCurrentUser])
 

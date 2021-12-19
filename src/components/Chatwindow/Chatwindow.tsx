@@ -21,7 +21,7 @@ const SEND_MESSAGE = gql`
 const Chatwindow = (props: any) => {
     console.log(props.messages[0])
     const [CurrentUser] = useRecoilState<any>(userState)
-    console.log("CurrUser: ", CurrentUser.currentUser)
+    console.log("CurrUser: ", CurrentUser)
 
     const [InputText, setInputText] = useState("")
     const [Message, { data }] = useMutation(SEND_MESSAGE);
@@ -30,7 +30,7 @@ const Chatwindow = (props: any) => {
         e.preventDefault()
         console.log(InputText)
         try {
-            if (props.messages[0].user1.id !== CurrentUser?.currentUser.id) {
+            if (props.messages[0].user1.id !== CurrentUser.id) {
                 await Message({variables: {receiver: props.messages[0].user1.id , content: InputText}})
             } else {
                 await Message({variables: {receiver: props.messages[0].user2.id , content: InputText}})
@@ -47,12 +47,12 @@ const Chatwindow = (props: any) => {
     return(
         <section className={styles.chat_section}>
             <div className={styles.user_name} >
-                <h1>{props.messages[0].user1.id !== CurrentUser?.currentUser.id ? props.messages[0].user1.firstName +" "+ props.messages[0].user1.lastName : props.messages[0].user2.firstName +" "+ props.messages[0].user2.lastName }</h1>
+                <h1>{props.messages[0].user1.id !== CurrentUser.id ? props.messages[0].user1.firstName +" "+ props.messages[0].user1.lastName : props.messages[0].user2.firstName +" "+ props.messages[0].user2.lastName }</h1>
             </div>
             <div className={styles.reverse}>
                 <div className={styles.container}>
                     {props.messages[0].messages.map((msg: { createdBy: { id: null; }; messagecontent: {} | null | undefined; }) => {
-                        if (msg.createdBy.id === CurrentUser?.currentUser.id) {
+                        if (msg.createdBy.id === CurrentUser.id) {
                             return(
                                 <p className={styles.msg_self}>{msg.messagecontent}</p>
                             )

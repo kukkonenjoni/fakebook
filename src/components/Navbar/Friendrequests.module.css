@@ -1,0 +1,15 @@
+.friendbox {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.profilepic {
+    margin: 15px 30px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+.accept_btn {
+}
+.reject_btn {
+}

@@ -1,0 +1,46 @@
+.profile_pic {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    align-self: center;
+    justify-self: center;
+    margin-bottom: 15px;
+}
+.user {
+    border: solid black thin;
+    margin: 20px;
+    background-color: rgba(23, 28, 29, 0.671);
+    height: 12rem;
+    padding: 30px;
+    border-radius: 50%;
+    width: 12rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.btn_add {
+    margin-top: 10px;
+    padding: 4px;
+    border-radius: 10px;
+    background-color: rgba(44, 209, 44, 0.623);
+}
+.btn_cancel {
+    margin-top: 10px;
+    padding: 4px;
+    border-radius: 10px;
+    background-color: rgba(209, 44, 44, 0.623);
+}
+.btn_add:hover {
+    background-color: rgba(8, 240, 8, 0.623);
+    cursor: pointer;
+}
+.btn_cancel:hover {
+    background-color: rgba(255, 0, 0, 0.623);
+    cursor: pointer;
+}
+.user:hover {
+    background-color: rgba(54, 76, 80, 0.671);
+    border: solid thin purple;
+    cursor: pointer;
+}

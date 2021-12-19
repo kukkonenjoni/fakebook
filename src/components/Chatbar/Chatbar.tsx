@@ -99,7 +99,6 @@ const Chatbar = () => {
     }
     return(
         <div className={styles.chatbar}>
-            {/*console.log(AllMessages)*/}
             Friend list
             {fList.data.currentUser.friends.map((friend: any) => {
                 return(

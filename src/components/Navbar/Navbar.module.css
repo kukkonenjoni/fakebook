@@ -1,7 +1,7 @@
 .navbar {
     width: 100%;
     height: 8%;
-    background-color: rgb(26, 23, 23);
+    background-color: rgb(2, 2, 2);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -34,7 +34,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    width: 17rem;
+    width: 25rem;
     height: 100%;
     align-items: center;
     margin-right: 20px;
@@ -47,4 +47,20 @@
 .navtext:hover {
     border-bottom: red solid 2px;
     box-sizing: border-box;
+}
+.friend_requests {
+    z-index: 10;
+    position: fixed;
+    bottom: 0vh;
+    background-color: rgba(31, 28, 28, 0.55);
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.friend_requests_container {
+    background-color:burlywood;
+    width: 30rem;
+    height: 45rem;
 }

@@ -1,7 +1,7 @@
 import { gql, useQuery } from "@apollo/client";
-import { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import LoadingAnimation from "../StylingAndAnimations/LoadingAnimation";
+import FriendDetail from "./FriendDetail";
 import styles from "./Searchfriends.module.css"
 
 const SEARCH_USERS = gql`
@@ -20,15 +20,8 @@ const Searchfriends = () => {
 
     let [searchParams] = useSearchParams();
     let users = searchParams.get("users")
-    console.log(users)
 
     const { data, loading } = useQuery(SEARCH_USERS, {variables: {name: users}})
-
-    useEffect(() => {
-        if (data) {
-            console.log(data.search)
-        }
-    },[data])
 
     if (loading) {
         return <div className={styles.center}> <LoadingAnimation /> </div>
@@ -37,14 +30,7 @@ const Searchfriends = () => {
         return(
             <div className={styles.users_container}>
                 {data.search.map((user: any) => {
-                    return (
-                        <div className={styles.user} key={user.id}>
-                            <h1>{user.firstName}</h1>
-                            <h1>{user.lastName}</h1>
-                            <h1>{user.age}</h1>
-                            <img src={user.profilePic} alt="Profile" className={styles.profile_pic} />
-                        </div>
-                    )
+                    return <FriendDetail user={user} key={user.id}/>
                 })}
             </div>
         )

@@ -1,15 +1,19 @@
 import styles from "./Navbar.module.css"
 import logo from "../StylingAndAnimations/download.svg"
-import { FormEvent, useEffect } from "react"
+import { FormEvent, useEffect, useState } from "react"
 import { useSearchParams, useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import userState from "../../atom";
+import Friendrequests from "./Friendrequests";
 
 
 const Navbar = () => {
 
+    const [CurrentUser] = useRecoilState(userState)
     let [searchParams, setSearchParams] = useSearchParams();
     let users = searchParams.get("users");
-
     let navigate = useNavigate()
+    const [FriendReqStatus, setFriendReqStatus] = useState(false)
 
     const onSearch = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -22,7 +26,6 @@ const Navbar = () => {
     useEffect(() => {
         if (!users) return
         if (users) {
-            //navigate(`../friends`, {replace: true})
             navigate(`../search/?users=${users}`, {replace: true})
         }
     }, [users, navigate])
@@ -35,10 +38,21 @@ const Navbar = () => {
                 <button type="submit" className={styles.searchbtn}>Search</button>
             </form>
             <div className={styles.navicons}>
-                <h1 className={styles.navtext}>Messages</h1>
+                <h1 className={styles.navtext} onClick={() => setFriendReqStatus(!FriendReqStatus)}>Friend Requests ({CurrentUser.received_friendreq.length})</h1>
                 <h1 className={styles.navtext}>Profile</h1>
                 <h1 className={styles.navtext}>Log Out</h1>
             </div>
+            {FriendReqStatus ? 
+            <div className={styles.friend_requests} onClick={() => setFriendReqStatus(!FriendReqStatus)}>
+                <div className={styles.friend_requests_container} onClick={(e) => e.stopPropagation()}>
+                    {CurrentUser.received_friendreq.map((fReq: any) => {
+                        return <Friendrequests request={fReq}/>
+                    })}
+                </div>
+            </div>
+            :
+            null
+        } 
         </nav>
     )
 }
