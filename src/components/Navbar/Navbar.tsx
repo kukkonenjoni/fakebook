@@ -1,7 +1,7 @@
 import styles from "./Navbar.module.css"
 import logo from "../StylingAndAnimations/download.svg"
 import { FormEvent, useEffect, useState } from "react"
-import { useSearchParams, useNavigate } from "react-router-dom";
+import { useSearchParams, useNavigate, Link } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import userState from "../../atom";
 import Friendrequests from "./Friendrequests";
@@ -32,7 +32,9 @@ const Navbar = () => {
 
     return(
         <nav className={styles.navbar}>
-            <img className={styles.logo} src={logo} alt="Fakebook logo"/>
+            <Link to={"/"}>
+                <img className={styles.logo} src={logo} alt="Fakebook logo"/>
+            </Link>
             <form className={styles.searchform} onSubmit={(e) => onSearch(e)}>
                 <input className={styles.search} type="search" name="users"></input>
                 <button type="submit" className={styles.searchbtn}>Search</button>

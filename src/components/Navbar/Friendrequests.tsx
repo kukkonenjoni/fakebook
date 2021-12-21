@@ -2,6 +2,7 @@ import { gql, useMutation } from "@apollo/client"
 import { useEffect } from "react"
 import { useRecoilState } from "recoil"
 import userState from "../../atom"
+import LoadingAnimation from "../StylingAndAnimations/LoadingAnimation"
 import styles from "./Friendrequests.module.css"
 
 const ACCEPT_REQUEST = gql`
@@ -10,6 +11,7 @@ const ACCEPT_REQUEST = gql`
             id
             firstName
             lastName
+            status
         }
     }
 `
@@ -18,7 +20,7 @@ const Friendrequests = (props: any) => {
     const { request } = props
     const [CurrentUser, setCurrentUser] = useRecoilState(userState)
 
-    const [acceptRequest, { data }] = useMutation(ACCEPT_REQUEST)
+    const [acceptRequest, { data, loading }] = useMutation(ACCEPT_REQUEST)
 
     useEffect(() => {
         if (data) {
@@ -32,9 +34,22 @@ const Friendrequests = (props: any) => {
             const newCurrentUser = JSON.parse(JSON.stringify(CurrentUser))
             newCurrentUser.received_friendreq = newFriendReq
             newCurrentUser.friends.push(data.acceptFriendReq)
+            console.log("newcurruser: ",newCurrentUser)
+            console.log("oldcurruser: ",CurrentUser)
             setCurrentUser(newCurrentUser)
         }
     }, [data])
+
+    if (loading) {
+        return (
+            <div className={styles.friendbox}>
+                <button className={styles.btn}>
+                    <span className={styles.spinner}></span>
+                    <span className={styles.btn_text}>loading...</span>
+                </button>
+            </div>
+        )
+    }
 
     return(
         <div className={styles.friendbox}>

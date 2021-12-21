@@ -20,6 +20,7 @@ const GET_USER = gql`
         firstName
         lastName
         id
+        status
       }
       sent_friendreq {
         firstName

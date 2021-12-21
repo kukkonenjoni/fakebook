@@ -19,12 +19,12 @@ const SEND_MESSAGE = gql`
 
 
 const Chatwindow = (props: any) => {
-    console.log(props.messages[0])
+    console.log(props)
     const [CurrentUser] = useRecoilState<any>(userState)
     console.log("CurrUser: ", CurrentUser)
 
     const [InputText, setInputText] = useState("")
-    const [Message, { data }] = useMutation(SEND_MESSAGE);
+    const [Message] = useMutation(SEND_MESSAGE);
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -41,8 +41,6 @@ const Chatwindow = (props: any) => {
             return "Please fill both fields!"
         }
     }
-
-    console.log(data)
 
     return(
         <section className={styles.chat_section}>

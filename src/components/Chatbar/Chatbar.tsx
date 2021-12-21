@@ -1,21 +1,11 @@
-import { useQuery, useSubscription } from "@apollo/client"
+import { useLazyQuery, useSubscription } from "@apollo/client"
 import gql from "graphql-tag"
-import { useEffect, useState } from "react"
+import { SetStateAction, useEffect, useState } from "react"
+import { useRecoilState } from "recoil"
+import userState from "../../atom"
 import Chatwindow from "../Chatwindow/Chatwindow"
 import styles from "./Chatbar.module.css"
 
-const FRIEND_LIST = gql`
-    query Query {
-        currentUser {
-            friends {
-                id
-                status
-                firstName
-                lastName
-                }
-        }
-    }
-`
 const ALL_MESSAGES = gql`
     query GetAllMessages {
     getAllMessages {
@@ -62,47 +52,46 @@ const Chatbar = () => {
 
     const [AllMessages, setAllMessages] = useState<Array<any>>(Array)
     const [ChatFriend, setChatFriend] = useState(null)
+    const [CurrentUser] = useRecoilState(userState)
 
-    let {data} = useSubscription(ON_MESSAGE)
+    let subData = useSubscription(ON_MESSAGE)
+    console.log(CurrentUser)
 
-
-    const fList = useQuery(FRIEND_LIST, {
-        pollInterval: 120000
-    })
-    const fMessages = useQuery(ALL_MESSAGES)
+    // const fMessages = useQuery(ALL_MESSAGES)
+    const [getMessages, {loading, data }] = useLazyQuery(ALL_MESSAGES)
     
     useEffect(() => {
-        if (data && AllMessages) {
+        if (subData.data && AllMessages) {
             const chatroom: Array<any> = AllMessages.map((croom) => {
-                if (croom.id === data.message.chatroom.id) {
-                    croom.messages.push(data.message)
+                if (croom.id === subData.data.message.chatroom.id) {
+                    croom.messages.push(subData.data.message)
                 }
                 return croom
             })
             setAllMessages(chatroom)
         }
-    }, [fMessages.data, data])
+    }, [data, subData.data])
 
     useEffect(() => {
-        if (fMessages.data) {
-            const allMessagesQuery: any = JSON.parse(JSON.stringify(fMessages.data.getAllMessages))
+        if (data) {
+            const allMessagesQuery = JSON.parse(JSON.stringify(data.getAllMessages))
             setAllMessages(allMessagesQuery)
         }
-    }, [fMessages.data])
+    }, [data])
 
-    if (fList.loading) {
-        return(
-            <div className={styles.chatbar}>
-                <h1 className={styles.friendName}>Loading</h1>
-            </div>
-        )
+    const handleChat = (id: SetStateAction<null>) => {
+        setChatFriend(id)
+        getMessages()
     }
+
+    console.log(data)
+
     return(
         <div className={styles.chatbar}>
             Friend list
-            {fList.data.currentUser.friends.map((friend: any) => {
+            {CurrentUser.friends.map((friend: any) => {
                 return(
-                    <div className={styles.flist_container} key={friend.id} onClick={() => setChatFriend(friend.id)}>
+                    <div className={styles.flist_container} key={friend.id} onClick={() => handleChat(friend.id)}>
                         <div style={{backgroundColor: friend.status ? "green" : "red"}} className={styles.status}></div>
                         <div>
                             <h1 className={styles.friendName}>{friend.firstName}</h1>
@@ -111,7 +100,7 @@ const Chatbar = () => {
                     </div>
                 )
             })}
-            {ChatFriend != null && <Chatwindow messages={AllMessages.filter((chatroom) =>  chatroom.user1.id === ChatFriend || chatroom.user2.id === ChatFriend)}/> }
+            {ChatFriend != null && !loading && AllMessages.length > 0 && <Chatwindow messages={AllMessages.filter((chatroom) =>  chatroom.user1.id === ChatFriend || chatroom.user2.id === ChatFriend)}/> }
         </div>
     )
 }
