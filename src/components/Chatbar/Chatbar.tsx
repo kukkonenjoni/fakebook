@@ -55,9 +55,7 @@ const Chatbar = () => {
     const [CurrentUser] = useRecoilState(userState)
 
     let subData = useSubscription(ON_MESSAGE)
-    console.log(CurrentUser)
 
-    // const fMessages = useQuery(ALL_MESSAGES)
     const [getMessages, {loading, data }] = useLazyQuery(ALL_MESSAGES)
     
     useEffect(() => {
@@ -83,13 +81,10 @@ const Chatbar = () => {
         setChatFriend(id)
         getMessages()
     }
-
-    console.log(data)
-
     return(
         <div className={styles.chatbar}>
             Friend list
-            {CurrentUser.friends.map((friend: any) => {
+            {CurrentUser.friends ? CurrentUser.friends.map((friend: any) => {
                 return(
                     <div className={styles.flist_container} key={friend.id} onClick={() => handleChat(friend.id)}>
                         <div style={{backgroundColor: friend.status ? "green" : "red"}} className={styles.status}></div>
@@ -99,7 +94,9 @@ const Chatbar = () => {
                         </div>
                     </div>
                 )
-            })}
+            }):
+            <div>
+            </div>}
             {ChatFriend != null && !loading && AllMessages.length > 0 && <Chatwindow messages={AllMessages.filter((chatroom) =>  chatroom.user1.id === ChatFriend || chatroom.user2.id === ChatFriend)}/> }
         </div>
     )

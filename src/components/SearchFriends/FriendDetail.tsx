@@ -14,7 +14,7 @@ const FRIEND_REQUEST = gql`
 const FriendDetail = (props: any) => {
 
     const [CurrentUser] = useRecoilState(userState)
-    const [sendFriendRequest, { data, loading, error}] = useMutation(FRIEND_REQUEST)
+    const [sendFriendRequest, { data, loading}] = useMutation(FRIEND_REQUEST)
     const { user } = props
     const requestSent = CurrentUser.sent_friendreq.filter((curr_user: any) => {
         if (curr_user.id === user.id) {

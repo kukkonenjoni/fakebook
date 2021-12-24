@@ -15,7 +15,7 @@
     padding: 0px 15px;
     background-color: grey;
     height: 2rem;
-    width: 18rem;
+    width: 70%;
     border-radius: 15px;
     z-index: 1;
     position: relative;
@@ -42,6 +42,7 @@
 .navtext {
     color: grey;
     padding: 7px;
+    font-size: 100%;
     box-sizing: border-box;
 }
 .navtext:hover {

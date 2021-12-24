@@ -36,6 +36,7 @@ const GET_POSTS = gql`
                 content
                 imageUrl
                 author {
+                    id
                     firstName
                     lastName
                 }
@@ -49,6 +50,7 @@ const GET_POSTS = gql`
                     createdAt
                     link
                     author {
+                        id
                         firstName
                         lastName
                     }

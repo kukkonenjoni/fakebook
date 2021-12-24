@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 import styles from "./Post.module.css"
 
 const Post = (props:any) => {
@@ -31,7 +32,9 @@ const Post = (props:any) => {
     return (
         <section className={styles.container}>
             <div className={styles.post_header}>
+                <Link to={`/user/${author.id}`}>
                 <h2 className={styles.username}>{author.firstName + " " + author.lastName}</h2>
+                </Link>
                 <p className={styles.createdat}>Created {formatDate(createdAt)} </p>
             </div>
             <div className={styles.content_container}>

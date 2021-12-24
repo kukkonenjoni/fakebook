@@ -1,6 +1,6 @@
 .sidebar {
     background-color: rgba(0, 0, 0, 0.7);
-    width: 10rem;
+    width: 10%;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -8,7 +8,7 @@
 .display{
     color: grey;
     transform: translateX(20px);
-    font-size: 1.5rem;
+    font-size: 100%;
     padding-right: 1rem;
     box-sizing: inherit;
     border-bottom: solid transparent 2px;

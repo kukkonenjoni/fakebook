@@ -2,7 +2,6 @@ import { gql, useMutation } from "@apollo/client"
 import { useEffect } from "react"
 import { useRecoilState } from "recoil"
 import userState from "../../atom"
-import LoadingAnimation from "../StylingAndAnimations/LoadingAnimation"
 import styles from "./Friendrequests.module.css"
 
 const ACCEPT_REQUEST = gql`

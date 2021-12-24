@@ -25,7 +25,7 @@ const Sidebar = () => {
                 <Route path="/search" element={<Searchfriends />} />
                 <Route path="/" element={<Home />} />
                 <Route path="/friends" element={<Home />} />
-                <Route path="profile/:id" element={<Profile />} />
+                <Route path="user/:id" element={<Profile />} />
             </Routes>
             <Chatbar />
         </main>
