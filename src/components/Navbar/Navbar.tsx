@@ -40,7 +40,7 @@ const Navbar = () => {
                 <button type="submit" className={styles.searchbtn}>Search</button>
             </form>
             <div className={styles.navicons}>
-                <h1 className={styles.navtext} onClick={() => setFriendReqStatus(!FriendReqStatus)}>Friend Requests ({CurrentUser.received_friendreq.length})</h1>
+                <h1 className={styles.navtext} onClick={() => setFriendReqStatus(!FriendReqStatus)}>Friend Requests ({CurrentUser.received_friendreq ? CurrentUser.received_friendreq.length : null})</h1>
                 <h1 className={styles.navtext}>Profile</h1>
                 <h1 className={styles.navtext}>Log Out</h1>
             </div>
@@ -48,7 +48,7 @@ const Navbar = () => {
             <div className={styles.friend_requests} onClick={() => setFriendReqStatus(!FriendReqStatus)}>
                 <div className={styles.friend_requests_container} onClick={(e) => e.stopPropagation()}>
                     {CurrentUser.received_friendreq.map((fReq: any) => {
-                        return <Friendrequests request={fReq}/>
+                        return <Friendrequests request={fReq} key={fReq.id}/>
                     })}
                 </div>
             </div>

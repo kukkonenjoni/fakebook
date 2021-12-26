@@ -4,14 +4,15 @@
     left: 50%;
 }
 .profile_pic {
-    width: 50%;
-    height: 50%;
+    width: 170px;
+    height: 170px;
     border-radius: 50%;
 }
 .profile_main {
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: center;
+    width: 100%;
 }
 .profile_h1 {
     margin: 5px 15px;
@@ -29,4 +30,26 @@
     flex-direction: column;
     align-items: center;
     width: 100%;
+}
+.image_div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.profile_info {
+    width: 100%;
+}
+.submit_btn {
+    margin: 5px 15px;
+    color: #fbfbfb;
+    background-color: green;
+    padding: 5px;
+}
+.submit_btn:hover {
+    cursor: pointer;
+}
+.image_h1 {
+    margin-left: 15px;
+    margin-top: -10px;
+    color: #fbfbfb;
 }

@@ -20,6 +20,7 @@ const CREATE_POST = gql`
             createdAt
             link
             author {
+                id
                 firstName
                 lastName
             }
@@ -37,8 +38,12 @@ const GET_POSTS = gql`
                 imageUrl
                 author {
                     id
+                    profilePic
                     firstName
                     lastName
+                }
+                likes {
+                    id
                 }
             }
             friends {
@@ -51,8 +56,12 @@ const GET_POSTS = gql`
                     link
                     author {
                         id
+                        profilePic
                         firstName
                         lastName
+                    }
+                    likes {
+                        id
                     }
                 }
             }

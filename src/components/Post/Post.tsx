@@ -1,8 +1,26 @@
+import { gql, useMutation } from "@apollo/client"
 import { Link } from "react-router-dom"
 import styles from "./Post.module.css"
 
+const LIKE = gql`
+    mutation Mutation($postId: Int) {
+        like(postId: $postId) {
+            id
+            likes {
+                id
+                firstName
+                lastName
+            }
+        }
+    }
+`
+
 const Post = (props:any) => {
-    const { author, content, createdAt, imageUrl, link } = props.post
+    console.log(props.post)
+    const { author, content, createdAt, imageUrl, link, id, likes } = props.post
+
+    const [Like, { data }] = useMutation(LIKE)
+    if (data) console.log(data)
 
     // Amount of time since post was created
     const formatDate = (postDate: string) => {
@@ -31,11 +49,14 @@ const Post = (props:any) => {
     }
     return (
         <section className={styles.container}>
-            <div className={styles.post_header}>
-                <Link to={`/user/${author.id}`}>
-                <h2 className={styles.username}>{author.firstName + " " + author.lastName}</h2>
-                </Link>
-                <p className={styles.createdat}>Created {formatDate(createdAt)} </p>
+            <div style={{display: "flex", marginLeft: "25px"}}>
+                <img src={author.profilePic} alt="profile pic" style={{width: "5rem", height: "5rem", borderRadius: "50%"}}/>
+                <div className={styles.post_header}>
+                    <Link to={`/user/${author.id}`}>
+                    <h2 className={styles.username}>{author.firstName + " " + author.lastName}</h2>
+                    </Link>
+                    <p className={styles.createdat}>Created {formatDate(createdAt)} </p>
+                </div>
             </div>
             <div className={styles.content_container}>
                 <p className={styles.content}>{content}</p>
@@ -44,7 +65,12 @@ const Post = (props:any) => {
             {imageUrl != null ? <div className={styles.img_container}>
                 <img src={imageUrl} alt="Post_image" className={styles.image} />
             </div> : ""}
-            <h2>Comments</h2>
+            <div className={styles.footer}>
+                <button className={styles.footer_btn}>Comments</button>
+                <button className={styles.footer_btn} 
+                    onClick={() => Like({variables: {postId: parseInt(id)}})}
+                    >Like {likes.length > 0 ? "(" + likes.length + ")" : null}</button>
+            </div>
         </section>
     )
 }

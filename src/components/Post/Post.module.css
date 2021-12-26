@@ -1,5 +1,5 @@
 .username {
-    font-size: 20px;
+    font-size: 1.5rem;
     color: grey;
 }
 .container {
@@ -33,4 +33,19 @@
 }
 .content {
     color: grey;
+}
+.footer {
+    display: flex;
+    width: 40%;
+    align-items: center;
+    margin-left: 25px;
+    justify-content: flex-start;
+}
+.footer_btn {
+    padding: 5px;
+    color: grey;
+}
+.footer_btn:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+    cursor: pointer;
 }
