@@ -26,6 +26,7 @@ const Sidebar = () => {
                 <Route path="/" element={<Home />} />
                 <Route path="/friends" element={<Home />} />
                 <Route path="user/:id" element={<Profile />} />
+                <Route path="post/:id" element={<div>Post ja ID component</div>} />
             </Routes>
             <Chatbar />
         </main>
