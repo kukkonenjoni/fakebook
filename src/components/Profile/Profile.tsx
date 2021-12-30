@@ -17,6 +17,9 @@ const GET_USER = gql`
             profilePic
             bio
             post {
+                likes {
+                    id
+                }
                 id
                 author {
                     profilePic

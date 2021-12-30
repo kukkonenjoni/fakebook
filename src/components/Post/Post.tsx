@@ -1,5 +1,7 @@
 import { gql, useMutation } from "@apollo/client"
 import { Link } from "react-router-dom"
+import { useRecoilState } from "recoil"
+import userState from "../../atom"
 import styles from "./Post.module.css"
 
 const LIKE = gql`
@@ -16,10 +18,10 @@ const LIKE = gql`
 `
 
 const Post = (props:any) => {
-    console.log(props.post)
     const { author, content, createdAt, imageUrl, link, id, likes } = props.post
 
     const [Like, { data }] = useMutation(LIKE)
+    const [CurrentUser] = useRecoilState(userState)
     if (data) console.log(data)
 
     // Amount of time since post was created
@@ -47,6 +49,10 @@ const Post = (props:any) => {
             return " a few seconds ago"
         }
     }
+    const hasLiked = likes.filter((like: { id: any }) => {
+        return like.id === CurrentUser.id
+    })
+    console.log(hasLiked)
     return (
         <section className={styles.container}>
             <div style={{display: "flex", marginLeft: "25px"}}>
@@ -58,18 +64,25 @@ const Post = (props:any) => {
                     <p className={styles.createdat}>Created {formatDate(createdAt)} </p>
                 </div>
             </div>
-            <div className={styles.content_container}>
-                <p className={styles.content}>{content}</p>
-                <p className={styles.content}>{link}</p>
-            </div>
+            <Link to={`post/${id}`}>
+                <div className={styles.content_container}>
+                    <p className={styles.content}>{content}</p>
+                    <p className={styles.content}>{link}</p>
+                </div>
+            </Link>
             {imageUrl != null ? <div className={styles.img_container}>
                 <img src={imageUrl} alt="Post_image" className={styles.image} />
             </div> : ""}
             <div className={styles.footer}>
                 <button className={styles.footer_btn}>Comments</button>
-                <button className={styles.footer_btn} 
+                {
+                    hasLiked.length > 0 ? 
+                    <button className={styles.footer_btn} >Liked {"(" + likes.length + ")"}</button>
+                    :
+                    <button className={styles.footer_btn} 
                     onClick={() => Like({variables: {postId: parseInt(id)}})}
-                    >Like {likes.length > 0 ? "(" + likes.length + ")" : null}</button>
+                    >Likes {likes.length > 0 ? "(" + likes.length + ")" : null}</button>
+                }
             </div>
         </section>
     )

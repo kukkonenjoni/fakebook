@@ -54,6 +54,7 @@
     ]
   },
   "devDependencies": {
-    "@types/apollo-upload-client": "^14.1.0"
+    "@types/apollo-upload-client": "^14.1.0",
+    "@types/react-router": "^5.1.17"
   }
 }

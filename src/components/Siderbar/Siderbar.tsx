@@ -6,6 +6,7 @@ import Home from "../LandingPage/Home";
 import Chatbar from "../Chatbar/Chatbar";
 import Searchfriends from "../SearchFriends/Searchfriends";
 import Profile from "../Profile/Profile";
+import PostDetail from "../Post/PostDetail";
 
 const Sidebar = () => {
 
@@ -26,7 +27,7 @@ const Sidebar = () => {
                 <Route path="/" element={<Home />} />
                 <Route path="/friends" element={<Home />} />
                 <Route path="user/:id" element={<Profile />} />
-                <Route path="post/:id" element={<div>Post ja ID component</div>} />
+                <Route path="post/:id" element={<PostDetail />} />
             </Routes>
             <Chatbar />
         </main>
