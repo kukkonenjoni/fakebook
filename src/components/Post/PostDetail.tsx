@@ -1,37 +1,54 @@
 import { gql, useQuery } from "@apollo/client"
 import { useParams } from "react-router-dom"
+import LoadingAnimation from "../StylingAndAnimations/LoadingAnimation"
+import Post from "./Post"
 import styles from "./PostDetail.module.css"
+import Comment from "./Comment"
 
 const GET_POST = gql`
-    query GetPost($postId: Int) {
-        getPost(postId: $postId) {
+    query Query($postId: Int) {
+    getPost(postId: $postId) {
+        id
+        imageUrl
+        author {
+            profilePic
+            firstName
+            lastName
             id
-            imageUrl
+        }
+        content
+        createdAt
+        likes {
+            id
+        }
+        comments {
+            id
+            comment
             author {
                 firstName
                 lastName
                 id
-            }
-            content
-            createdAt
-            link
-            likes {
-                id
+                profilePic
             }
         }
     }
+}
 `
 
 const PostDetail = () => {
 
     const { id }: {id: any} = useParams()
-    const {data, loading, error} = useQuery(GET_POST, {variables: {postId: parseInt(id)}})
-    if (data) console.log(data)
+    const { data, loading } = useQuery(GET_POST, {variables: {postId: parseInt(id)}})
+
+    if (loading) return <LoadingAnimation />
 
     return(
-        <div className={styles.friend_requests}>
-            <h1>HOLA AMIGO</h1>
-         </div>
+        <div className={styles.container}>
+            {data && <Post post={data.getPost}/>}
+            {data.getPost.comments.map((comment:any) => {
+                return <Comment comment={comment}/>
+            })}
+        </div>
     )
 }
 

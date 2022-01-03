@@ -20,9 +20,9 @@ const LIKE = gql`
 const Post = (props:any) => {
     const { author, content, createdAt, imageUrl, link, id, likes } = props.post
 
-    const [Like, { data }] = useMutation(LIKE)
+    const [Like] = useMutation(LIKE)
     const [CurrentUser] = useRecoilState(userState)
-    if (data) console.log(data)
+    console.log(author)
 
     // Amount of time since post was created
     const formatDate = (postDate: string) => {
@@ -52,7 +52,6 @@ const Post = (props:any) => {
     const hasLiked = likes.filter((like: { id: any }) => {
         return like.id === CurrentUser.id
     })
-    console.log(hasLiked)
     return (
         <section className={styles.container}>
             <div style={{display: "flex", marginLeft: "25px"}}>
@@ -64,15 +63,15 @@ const Post = (props:any) => {
                     <p className={styles.createdat}>Created {formatDate(createdAt)} </p>
                 </div>
             </div>
-            <Link to={`post/${id}`}>
+            <Link to={`/post/${id}`}>
                 <div className={styles.content_container}>
                     <p className={styles.content}>{content}</p>
                     <p className={styles.content}>{link}</p>
                 </div>
-            </Link>
             {imageUrl != null ? <div className={styles.img_container}>
                 <img src={imageUrl} alt="Post_image" className={styles.image} />
             </div> : ""}
+            </Link>
             <div className={styles.footer}>
                 <button className={styles.footer_btn}>Comments</button>
                 {
