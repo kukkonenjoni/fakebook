@@ -3,7 +3,6 @@ import styles from "./Comment.module.css"
 const Comment = (props: any) => {
 
     const { comment } = props
-    console.log(comment)
 
     return (
         <section className={styles.container}>

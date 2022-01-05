@@ -4,3 +4,20 @@
     align-items: center;
     width: 100%;
 }
+.text_area {
+    font-family: inherit;
+    width: 90%;
+    height: 7rem;
+    background-color: rgba(255,255,255,0.15);
+}
+.comment_container {
+    width: 45%;
+    height: 10rem;
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 15px;
+    border-radius: 10px;
+    align-items: center;
+    justify-content: space-around;
+}
