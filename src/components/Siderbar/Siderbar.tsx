@@ -18,14 +18,10 @@ const Sidebar = () => {
                 <h1 className={styles.display} style={{borderBottom: pathname === "/" ? "red 2px solid" : ""}}>
                     <Link to="/">Main</Link>
                 </h1>
-                <h1 className={styles.display} style={{borderBottom: pathname === "/friends" ? "red 2px solid" : ""}}>
-                    <Link to="/friends">Friends</Link>
-                </h1>
             </div>
             <Routes>
                 <Route path="/search" element={<Searchfriends />} />
                 <Route path="/" element={<Home />} />
-                <Route path="/friends" element={<Home />} />
                 <Route path="user/:id" element={<Profile />} />
                 <Route path="post/:id" element={<PostDetail />} />
             </Routes>

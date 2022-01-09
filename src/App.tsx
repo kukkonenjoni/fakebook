@@ -38,14 +38,17 @@ const GET_USER = gql`
 
 const App = () => {
 
-  const { data, loading } = useQuery(GET_USER);
+  const { client, data, loading } = useQuery(GET_USER, {
+    fetchPolicy: "network-only"
+  });
   const [CurrentUser, setCurrentUser] = useRecoilState(userState)
+  client.clearStore()
 
   useEffect(()=> {
     if(data) {
       setCurrentUser(data.currentUser)
     }
-  },[data, setCurrentUser])
+  },[data, setCurrentUser, client, loading])
 
   return (
     <div className="container">

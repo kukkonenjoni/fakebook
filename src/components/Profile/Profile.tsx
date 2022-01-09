@@ -121,8 +121,6 @@ const Profile = () => {
                         <h1 className={styles.profile_h1}>contact: {Profile.email}</h1>
                     </div>
                 </div>
-                    <h1 className={styles.profile_h1}>Bio: </h1>
-                    <h1 className={styles.profile_h1}>{Profile.bio}</h1>
                 </div>
                 {Profile.post.map((post: any) => {
                 return <Post post={post} key={post.id}/>

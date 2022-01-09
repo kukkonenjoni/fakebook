@@ -1,7 +1,7 @@
 import { useRef, useEffect } from "react";
 
 var stars = [], // Array that contains the stars
-FPS = 70, // Frames per second
+FPS = 200, // Frames per second
 s = 150, // Number of stars
 mouse = {
   x: 0,

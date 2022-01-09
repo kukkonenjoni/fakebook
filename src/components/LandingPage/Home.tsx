@@ -23,6 +23,10 @@ const CREATE_POST = gql`
                 id
                 firstName
                 lastName
+                profilePic
+            }
+            likes {
+             id   
             }
         }
     }
@@ -83,12 +87,12 @@ const Home = (): JSX.Element => {
     const [createPost] = useMutation(CREATE_POST, {
         onCompleted: data => setAllPosts(prevState => {return [data.createPost, ...prevState]})
     })
-    const { data } = useQuery(GET_POSTS)
+    const { data, loading } = useQuery(GET_POSTS)
 
     useEffect(() => {
         let fPosts: any[] = []
-        if (data) {
-            data.currentUser.friends.forEach((friend: any) => {
+        if (data && data.currentUser !== null) {
+            data.currentUser.friends?.forEach((friend: any) => {
                 fPosts = friend.post.map((post: any) => {
                     return post
                 })
@@ -105,12 +109,11 @@ const Home = (): JSX.Element => {
             })
             setAllPosts(allPosts)
         }
-    }, [data])
+    }, [data, loading])
 
     const handleFileChange = (e: FormEvent<HTMLDivElement>) => {
         e.preventDefault()
         const file = inputFile.current?.files![0]
-        console.log(file)
         if (file !== undefined) {
             setErrorMsg("")
             singleUpload({ variables: { file }})
@@ -124,6 +127,7 @@ const Home = (): JSX.Element => {
         }
     }
     const submitPost = (data: any = null) => {
+        console.log(data)
         if (data) {
             createPost({ variables: {content: Content, imageUrl: data.singleUpload.url}})
         } else {

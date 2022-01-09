@@ -9,7 +9,7 @@ import Friendrequests from "./Friendrequests";
 
 const Navbar = () => {
 
-    const [CurrentUser] = useRecoilState(userState)
+    const [CurrentUser, setCurrentUser] = useRecoilState(userState)
     let [searchParams, setSearchParams] = useSearchParams();
     let users = searchParams.get("users");
     let navigate = useNavigate()
@@ -21,6 +21,11 @@ const Navbar = () => {
         let newUser = formData.get("users") as string;
         if (!newUser) return;
         setSearchParams({ users: newUser });
+    }
+
+    const logOut = () => {
+        localStorage.removeItem("token")
+        setCurrentUser(null)
     }
 
     useEffect(() => {
@@ -41,8 +46,10 @@ const Navbar = () => {
             </form>
             <div className={styles.navicons}>
                 <h1 className={styles.navtext} onClick={() => setFriendReqStatus(!FriendReqStatus)}>Friend Requests ({CurrentUser.received_friendreq ? CurrentUser.received_friendreq.length : null})</h1>
-                <h1 className={styles.navtext}>Profile</h1>
-                <h1 className={styles.navtext}>Log Out</h1>
+                <Link to={`/user/${CurrentUser.id}`}>
+                    <h1 className={styles.navtext}>Profile</h1>
+                </Link>
+                <h1 className={styles.navtext} onClick={() => logOut()}>Log Out</h1>
             </div>
             {FriendReqStatus ? 
             <div className={styles.friend_requests} onClick={() => setFriendReqStatus(!FriendReqStatus)}>

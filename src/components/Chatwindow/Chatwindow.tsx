@@ -45,7 +45,8 @@ const Chatwindow = (props: any) => {
     return(
         <section className={styles.chat_section}>
             <div className={styles.user_name} >
-                <h1>{props.messages[0].user1.id !== CurrentUser.id ? props.messages[0].user1.firstName +" "+ props.messages[0].user1.lastName : props.messages[0].user2.firstName +" "+ props.messages[0].user2.lastName }</h1>
+                <h1 style={{width: "90%"}}>{props.messages[0].user1.id !== CurrentUser.id ? props.messages[0].user1.firstName +" "+ props.messages[0].user1.lastName : props.messages[0].user2.firstName +" "+ props.messages[0].user2.lastName }</h1>
+                <h1 className={styles.close_btn} onClick={() => props.close()}>&#10006;</h1>
             </div>
             <div className={styles.reverse}>
                 <div className={styles.container}>

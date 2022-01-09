@@ -22,7 +22,6 @@ const Post = (props:any) => {
 
     const [Like] = useMutation(LIKE)
     const [CurrentUser] = useRecoilState(userState)
-    console.log(author)
 
     // Amount of time since post was created
     const formatDate = (postDate: string) => {
@@ -31,7 +30,6 @@ const Post = (props:any) => {
         if (timeSincePost < 1 && timeSincePost > 0.01) {
             let minutes = 60/100*timeSincePost
             minutes = parseFloat(minutes.toFixed(2))
-            console.log(minutes.toFixed(2))
             let dateString = minutes.toString().split(".").map((num) => parseInt(num))
             return dateString[1] + " minutes ago"
         } else if (timeSincePost >= 1 && timeSincePost <= 24){
@@ -49,9 +47,12 @@ const Post = (props:any) => {
             return " a few seconds ago"
         }
     }
-    const hasLiked = likes.filter((like: { id: any }) => {
-        return like.id === CurrentUser.id
-    })
+    let hasLiked
+    if (likes) {
+        hasLiked = likes.filter((like: { id: any }) => {
+            return like.id === CurrentUser.id
+        })   
+    }
     return (
         <section className={styles.container}>
             <div style={{display: "flex", marginLeft: "25px"}}>
@@ -73,7 +74,9 @@ const Post = (props:any) => {
             </div> : ""}
             </Link>
             <div className={styles.footer}>
-                <button className={styles.footer_btn}>Comments</button>
+                <Link to={`/post/${id}`}>
+                    <button className={styles.footer_btn}>Comments</button>
+                </Link>
                 {
                     hasLiked.length > 0 ? 
                     <button className={styles.footer_btn} >Liked {"(" + likes.length + ")"}</button>

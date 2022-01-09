@@ -33,8 +33,6 @@ const Friendrequests = (props: any) => {
             const newCurrentUser = JSON.parse(JSON.stringify(CurrentUser))
             newCurrentUser.received_friendreq = newFriendReq
             newCurrentUser.friends.push(data.acceptFriendReq)
-            console.log("newcurruser: ",newCurrentUser)
-            console.log("oldcurruser: ",CurrentUser)
             setCurrentUser(newCurrentUser)
         }
     }, [data])

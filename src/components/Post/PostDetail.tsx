@@ -62,7 +62,8 @@ const PostDetail = () => {
         content: Comm,
         postId: parseInt(data?.getPost.id)
     },
-    onCompleted: data => setNewComment([data.comment,...NewComment])
+    onCompleted: data => setNewComment([data.comment,...NewComment]),
+    fetchPolicy: "no-cache"
     });
 
     if (loading) return <LoadingAnimation />

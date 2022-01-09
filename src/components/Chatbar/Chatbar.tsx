@@ -81,9 +81,14 @@ const Chatbar = () => {
         setChatFriend(id)
         getMessages()
     }
+
+    const close = () => {
+        setChatFriend(null)
+    }
+
     return(
         <div className={styles.chatbar}>
-            Friend list
+            <h1 className={styles.flist_text}>Friend List </h1>
             {CurrentUser.friends ? CurrentUser.friends.map((friend: any) => {
                 return(
                     <div className={styles.flist_container} key={friend.id} onClick={() => handleChat(friend.id)}>
@@ -97,7 +102,7 @@ const Chatbar = () => {
             }):
             <div>
             </div>}
-            {ChatFriend != null && !loading && AllMessages.length > 0 && <Chatwindow messages={AllMessages.filter((chatroom) =>  chatroom.user1.id === ChatFriend || chatroom.user2.id === ChatFriend)}/> }
+            {ChatFriend != null && !loading && AllMessages.length > 0 && <Chatwindow close={close} messages={AllMessages.filter((chatroom) =>  chatroom.user1.id === ChatFriend || chatroom.user2.id === ChatFriend)}/> }
         </div>
     )
 }

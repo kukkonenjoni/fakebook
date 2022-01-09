@@ -54,7 +54,7 @@
     height: 5%;
     display: flex;
     text-align: center;
-    justify-content: center;
+    justify-content: space-around;
     border-bottom: black solid thin;
 }
 .form_btn {
@@ -65,4 +65,12 @@
 }
 .form_text {
     margin-left: 20px;
+}
+.close_btn {
+    color: rgb(59, 54, 54);
+    position: relative;
+    top: 0px;
+}
+.close_btn:hover {
+    cursor: pointer;
 }

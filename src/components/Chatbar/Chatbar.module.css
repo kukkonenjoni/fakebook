@@ -22,3 +22,10 @@
 .friendName {
     color: grey;
 }
+.flist_text {
+    color: grey;
+    border-bottom: brown thin solid;
+    padding-bottom: 5px; 
+    margin-bottom: 5px;
+    text-align: center;
+}

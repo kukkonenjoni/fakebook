@@ -16,21 +16,31 @@ const FriendDetail = (props: any) => {
     const [CurrentUser] = useRecoilState(userState)
     const [sendFriendRequest, { data, loading}] = useMutation(FRIEND_REQUEST)
     const { user } = props
-    const requestSent = CurrentUser.sent_friendreq.filter((curr_user: any) => {
-        if (curr_user.id === user.id) {
-            return curr_user
-        } else {
-            return null
+    let requestSent = []
+    if (CurrentUser.sent_friendreq) {
+        requestSent = CurrentUser.sent_friendreq.filter((curr_user: any) => {
+            if (curr_user.id === user.id) {
+                return curr_user
+            } else {
+                return null
+            }
+        })
+    }
+    const isFriend = CurrentUser.friends.filter((friend: any) => {
+        if (user.id === friend.id) {
+            return friend
         }
+        return null
     })
-    console.log(requestSent)
-
+    console.log(isFriend)
     const friendRequest = () => {
         sendFriendRequest({ variables: {friendId: user.id}})
     }
+
     if (CurrentUser.id === user.id) {
         return null
     }
+
     return(
         <div className={styles.user}>
             <img src={user.profilePic} alt="Profile" className={styles.profile_pic} />
@@ -42,6 +52,7 @@ const FriendDetail = (props: any) => {
             {loading || data || requestSent.length > 0 ? 
             <button className={styles.btn_cancel}>Cancel friend request</button>
             :
+            isFriend.length > 0 ? <button className={styles.btn_add} style={{backgroundColor: "pink"}}>User added already</button> :
             <button onClick={() => friendRequest()} className={styles.btn_add}>Send friend request</button>}
         </div>
     )
