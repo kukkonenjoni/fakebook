@@ -18,7 +18,7 @@ const httpLink = createUploadLink({
   uri: 'http://cobalt-baton-337015.appspot.com/graphql',
 });
 const wsLink = new WebSocketLink({
-  uri: 'ws://cobalt-baton-337015.appspot.com/graphql',
+  uri: 'wss://cobalt-baton-337015.appspot.com/graphql',
   options: {
     reconnect: true,
     connectionParams: {
