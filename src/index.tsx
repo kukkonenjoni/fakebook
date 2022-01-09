@@ -15,7 +15,7 @@ import { getMainDefinition } from '@apollo/client/utilities';
 import { WebSocketLink } from '@apollo/client/link/ws';
 
 const httpLink = createUploadLink({
-  uri: 'http://cobalt-baton-337015.appspot.com/graphql',
+  uri: 'https://cobalt-baton-337015.appspot.com/graphql',
 });
 const wsLink = new WebSocketLink({
   uri: 'wss://cobalt-baton-337015.appspot.com/graphql',
