@@ -5,7 +5,7 @@ import Ghost from "../StylingAndAnimations/Ghost"
 
 const NoUserLandingPage = () => {
 
-    alert("Accounts to test if you dont want to log in: emma.smith@gmail.com | password: secret and john.doe@gmail.com | password: secret")
+    alert("Accounts to test if you dont want to create your own: emma.smith@gmail.com | password: secret and john.doe@gmail.com | password: secret")
 
     return(
         <main className={styles.main}>
