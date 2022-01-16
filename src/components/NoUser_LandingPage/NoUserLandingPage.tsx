@@ -4,6 +4,9 @@ import NoUserForm from "./NoUserForm"
 import Ghost from "../StylingAndAnimations/Ghost"
 
 const NoUserLandingPage = () => {
+
+    alert("Accounts to test if you dont want to log in: emma.smith@gmail.com | password: secret and john.doe@gmail.com | password: secret")
+
     return(
         <main className={styles.main}>
             <div className={styles.test}>
