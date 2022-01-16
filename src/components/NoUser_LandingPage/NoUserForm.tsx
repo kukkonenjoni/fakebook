@@ -135,7 +135,7 @@ const NoUserForm = () => {
                     </div>
                 </form>
                 <div className={styles.forgot}>
-                    <button type="submit" className={styles.forgotbutton}>Forgot your password?</button>
+                    <button type="submit" className={styles.forgotbutton} onClick={() => alert("Sorry, i dont work")}>Forgot your password?</button>
                 </div>
             </animated.div>
             :
